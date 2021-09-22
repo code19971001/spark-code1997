@@ -1,4 +1,4 @@
-package com.it.demo
+package com.it.workcount
 
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
@@ -24,7 +24,7 @@ object WordCount3 {
     //(hello,1),(hello,1),(word,1)
     val word2One: RDD[(String, Int)] = words.map(word => (word, 1))
     //根据touple数据的第一个元素进行reduceByKey
-    val result:Array[(String,Int)] =word2One.reduceByKey(_+_).collect()
+    val result: Array[(String, Int)] = word2One.reduceByKey(_ + _).collect()
     result.foreach(println)
     //关闭连接
     sparkContext.stop();
