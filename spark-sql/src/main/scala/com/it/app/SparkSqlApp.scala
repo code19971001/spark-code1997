@@ -92,8 +92,7 @@ object SparkSqlApp {
 
     override def reduce(buf: Buffer, city: String): Buffer = {
       buf.total += 1
-      val newCount = buf.cityMap.getOrElse(city, 0L) + 1
-      buf.cityMap.update(city, newCount)
+      buf.cityMap.update(city, buf.cityMap.getOrElse(city, 0L) + 1)
       buf
     }
 
