@@ -1,4 +1,4 @@
-package com.it.demo
+package com.it.app
 
 /**
  * @author : code1997
