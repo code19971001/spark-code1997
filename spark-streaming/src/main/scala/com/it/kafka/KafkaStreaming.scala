@@ -29,11 +29,32 @@ object KafkaStreaming {
       LocationStrategies.PreferConsistent,
       ConsumerStrategies.Subscribe[String, String](mutable.Set("spark-kafka"), kafkaParams))
     dStream.map(_.value()).print()
-
     //启动采集器
     ssc.start()
-    //等待采集器的关闭
+
+    new Thread(() => {
+      //优雅的关闭：计算节点不再接收新的数据，而是将现有的数据处理完毕，然后关闭.
+      //需要使用第三方来存储一个状态，时刻进行轮询，需要第三方程序来添加关闭状态.
+      //轮询
+      while (true) {
+        //查询第三方介质(比如hdfs)用于改变程序的状态
+        if (true) {
+          import org.apache.spark.streaming.StreamingContextState
+          //SparkStreaming本身的状态
+          val streamingContextState: StreamingContextState = ssc.getState()
+          if (streamingContextState == StreamingContextState.ACTIVE) {
+            ssc.stop(true, true)
+            System.exit(0)
+          }
+          Thread.sleep(5000)
+        }
+      }
+    }).start()
+
+    //会阻塞当前进程：如果想要关闭采集器。需要创建新的线程
     ssc.awaitTermination()
+
+
   }
 
 }
