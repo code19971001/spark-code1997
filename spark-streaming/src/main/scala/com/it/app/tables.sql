@@ -11,3 +11,13 @@ CREATE TABLE user_ad_count
     `count` BIGINT,
     PRIMARY KEY (dt, userid, adid)
 );
+
+CREATE TABLE area_city_ad_count
+(
+    dt    VARCHAR(255),
+    AREA  VARCHAR(255),
+    city  VARCHAR(255),
+    adid  VARCHAR(255),
+    COUNT BIGINT,
+    PRIMARY KEY (dt, AREA, city, adid)
+);

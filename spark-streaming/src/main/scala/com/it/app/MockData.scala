@@ -27,6 +27,7 @@ object MockData {
       messages.foreach(message => {
         import org.apache.kafka.clients.producer.ProducerRecord
         //发送数据到kafka
+        println(message)
         producer.send(new ProducerRecord[String, String]("spark-streaming", message))
       })
       Thread.sleep(2000)
@@ -35,10 +36,11 @@ object MockData {
 
 
   def generateData(): ListBuffer[String] = {
+    import scala.util.Random
     val buffer: ListBuffer[String] = ListBuffer[String]()
     val areaList: ListBuffer[String] = ListBuffer[String]("华东", "华西", "华南", "华北")
     val cityList: ListBuffer[String] = ListBuffer[String]("杭州", "北京", "上海", "郑州", "洛阳")
-    for (i <- 1 to 30) {
+    for (i <- 1 to new Random().nextInt(50) + 1) {
       import scala.util.Random
       val area = areaList(new Random().nextInt(4))
       val city = cityList(new Random().nextInt(5))
