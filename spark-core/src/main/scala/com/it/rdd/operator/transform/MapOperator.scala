@@ -19,6 +19,7 @@ object MapOperator {
       println(">>>>>")
       iter.map(_ * 2)
     })
+    //collect是转换操作，用于触发计算
     map1.collect()
     //返回每个分区中的最大值:应该是2和4
     val map2: RDD[Int] = rdd.mapPartitions(iter => {

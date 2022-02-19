@@ -1,4 +1,4 @@
-package com.it.workcount
+package com.it.wordcount
 
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
